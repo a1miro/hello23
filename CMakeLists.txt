@@ -16,11 +16,17 @@ set(CMAKE_CXX_MODULE_STD ON)
 # GCC on macOS SDK 26 may expose C11 Annex K declarations that require rsize_t
 # during std module compilation. This alias unblocks GCC's `import std` build.
 if(APPLE AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    string(APPEND CMAKE_CXX_FLAGS " -Drsize_t=size_t")
+    if(NOT CMAKE_CXX_FLAGS MATCHES "(^| )-Drsize_t=size_t($| )")
+        string(APPEND CMAKE_CXX_FLAGS " -Drsize_t=size_t")
+    endif()
 
     # Use Apple binutils for Mach-O archives; GNU ar can produce misaligned members.
-    set(CMAKE_AR /usr/bin/ar)
-    set(CMAKE_RANLIB /usr/bin/ranlib)
+    if(NOT CMAKE_AR)
+        set(CMAKE_AR /usr/bin/ar)
+    endif()
+    if(NOT CMAKE_RANLIB)
+        set(CMAKE_RANLIB /usr/bin/ranlib)
+    endif()
 endif()
 
 # 4. Define the executable target

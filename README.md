@@ -17,9 +17,33 @@ ninja --version
 g++-15 --version
 ```
 
+## Configure With Toolchain File
+
+Use the provided toolchain file for macOS 26 + Homebrew GCC 15:
+
+```bash
+cmake -S . -B build -G Ninja -DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/macos26-gcc15.cmake
+```
+
+## Configure With CMake Presets
+
+The repo also includes named build configurations in [CMakePresets.json](CMakePresets.json):
+
+```bash
+cmake --preset macos26-gcc15-debug
+cmake --build --preset build-debug -v
+```
+
+For an optimized build:
+
+```bash
+cmake --preset macos26-gcc15-release
+cmake --build --preset build-release -v
+```
+
 ## Build (verified)
 
-Configure with GCC 15 and Ninja:
+Configure with GCC 15 and Ninja directly:
 
 ```bash
 cmake -S . -B build -G Ninja -DCMAKE_CXX_COMPILER=/usr/local/bin/g++-15
@@ -41,7 +65,7 @@ Run:
 
 `import std` is still experimental in CMake and requires:
 
-- Experimental gate variable set before `project()`
+- Experimental gate variable set before `project()
 - A generator/toolchain that supports C++ module dependency scanning (Ninja in this setup)
 
 On macOS SDK 26 with Homebrew GCC 15, two additional issues were observed and handled in `CMakeLists.txt`:
@@ -66,5 +90,6 @@ Example fresh configure:
 
 ```bash
 rm -rf build
-cmake -S . -B build -G Ninja -DCMAKE_CXX_COMPILER=/usr/local/bin/g++-15
+cmake --preset macos26-gcc15-debug
+cmake --build --preset build-debug -v
 ```

@@ -1,0 +1,44 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 30,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "macos26-gcc15-debug",
+      "displayName": "macOS 26 GCC 15 Debug",
+      "description": "Configure with Ninja and the macOS 26 GCC 15 toolchain.",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "toolchainFile": "${sourceDir}/cmake/toolchains/macos26-gcc15.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "macos26-gcc15-release",
+      "displayName": "macOS 26 GCC 15 Release",
+      "description": "Configure with Ninja and the macOS 26 GCC 15 toolchain.",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "toolchainFile": "${sourceDir}/cmake/toolchains/macos26-gcc15.cmake",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "build-debug",
+      "displayName": "Build Debug",
+      "configurePreset": "macos26-gcc15-debug"
+    },
+    {
+      "name": "build-release",
+      "displayName": "Build Release",
+      "configurePreset": "macos26-gcc15-release"
+    }
+  ]
+}
